@@ -7,7 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.demo.models.MenuItem;
+import com.example.demo.models.User;
 import com.example.demo.services.MenuService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class MenuController {
@@ -18,11 +21,20 @@ public class MenuController {
     }
 
     @GetMapping("/menu")
-    public String getMenuPage(Model model) {
+    public String getMenuPage(Model model, HttpSession session) {
+        // Check if the user is logged in
+        User user = (User) session.getAttribute("loggedInUser");
+        if (user == null) {
+            return "redirect:/login"; // Redirect to login if not authenticated
+        }
+
+        // Pass logged-in user details to the view
+        model.addAttribute("user", user);
+
         // Fetch all menu items
         List<MenuItem> menuItems = menuService.getAllMenuItems();
 
-        // Pass the list to the template
+        // Pass the list of menu items to the template
         model.addAttribute("menuItems", menuItems);
 
         return "menu"; // Corresponds to menu.html

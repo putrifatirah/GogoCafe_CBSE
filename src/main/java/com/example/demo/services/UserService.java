@@ -16,10 +16,6 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    // public void deleteUser(String userId) {
-    //     userRepository.deleteById(userId); // Deletes the user by their ID in MongoDB
-    // }
-
     public void saveUser(User user) {
         if (user.getUsername() == null || user.getPassword() == null || user.getEmail() == null) {
             throw new IllegalArgumentException("Required fields are missing.");
@@ -27,6 +23,10 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void updateUser(User user) {
+        userRepository.save(user); // Save the updated user in the database
+    }
+    
     public User findByEmailAndPassword(String email, String password) {
         User user = userRepository.findByEmail(email);
         if (user != null && user.getPassword().equals(password)) {
