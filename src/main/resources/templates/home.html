@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>GOGO CAFE</title>
+    <link rel="icon" type="image/png" href="/images/icon.png" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="/styles/home.css" />
+    <link rel="stylesheet" href="/styles/topnavigation.css" />
+    
+    <style>
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: #f9f9f9;
+        min-width: 150px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+      }
+
+      .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+      }
+
+      .dropdown-content a:hover {
+        background-color: #f1f1f1;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <a>
+        <img src="/images/logo2.png" class="logo" />
+        <ul class="nav">
+          <div class="nav__list">
+            <a href="/" class="nav__link active">HOME</a>
+            <a href="/menu" class="nav__link">MENU</a>
+            <a href="/ordernow" class="nav__link">ORDER NOW</a>
+
+            <!-- Login/Profile/Logout Links -->
+            <a th:if="${session.loggedInUser == null}" onclick="document.getElementById('id01').style.display='block'" href="#" class="nav__link">LOGIN</a>
+
+            <!-- Dropdown for logged-in users -->
+            <div th:if="${session.loggedInUser != null}" class="dropdown">
+              <a href="#" class="nav__link">MY ACCOUNT</a>
+              <div class="dropdown-content">
+                <a href="/profile">View Profile</a>
+                <a href="/logout">Logout</a>
+              </div>
+            </div>
+          </div>
+        </ul>
+      </a>
+    </header>
+
+    <!-- Modal -->
+    <div id="id01" class="modal" th:classappend="${showModal} ? 'display:block' : 'display:none;'">
+      <span
+        style="width: 20px; z-index: 10002;"
+        onclick="document.getElementById('id01').style.display='none'"
+        class="close"
+        title="Close"
+        >&times;</span
+      >
+
+      <div class="sub-page-content">
+        <div class="header_login_panel">
+          <form th:action="@{/login}" method="post" id="login_form">
+            <table border="0" cellspacing="0" cellpadding="0" width="100%">
+              <tbody>
+                <tr>
+                  <td class="login_heading" align="center">Member Login</td>
+                </tr>
+                <tr>
+                  <td style="padding-top:10px;font-weight:500;" align="center">
+                    If you have an account with us, please log in.
+                  </td>
+                </tr>
+                <!-- <tr>
+                  <td><img src="/images/pixel_trans.gif" alt="" width="100%" height="10" /></td>
+                </tr> -->
+                <tr>
+                  <td class="main2">Login:</td>
+                </tr>
+                <tr>
+                  <td align="center" style="padding-top:5px;">
+                    <input
+                      type="text"
+                      name="email"
+                      class="loginField_box"
+                      th:value="${email ?: ''}"
+                    />
+                    <p class="error" th:if="${error == 'email_error'}">Email field is empty</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="main2">Password:</td>
+                </tr>
+                <tr>
+                  <td align="center" style="padding-bottom:5px;">
+                    <input
+                      type="password"
+                      name="password"
+                      id="password01"
+                      class="passwordField_box"
+                      required
+                    />
+                    <input type="checkbox" onclick="myFunction()"> Show Password
+                    <p class="error" th:if="${error == 'password_error'}">Password field is empty</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="css_btnStyle" align="center" style="padding-top: 5px;">
+                    <input type="submit" id="login_submit" name="submit" class="full_button" value="Login" />
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:5px 0px 10px 0px;" align="center">
+                    <a class="smalltext_link" href="/forgot-password">Forgot Your Password?</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+        </div>
+
+        <div class="header_new_customer_panel">
+          <table border="0" width="100%" cellspacing="0" cellpadding="0">
+            <tbody>
+              <tr>
+                <td class="login_heading" align="center" style="padding-top:40px;">New Customer</td>
+              </tr>
+              <tr>
+                <td align="center" style="padding-top:10px;font-weight:500;">
+                  By creating an account with us, you will be able to move through the checkout process faster, store
+                  multiple shipping addresses, view and track your orders in your account and more.
+                  
+                </td>
+              </tr>
+              <tr>
+                <td class="css_btnStyle" align="center">
+                  <a href="/signup" class="css_btn_full">Sign Up</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <!-- Banner Slider -->
+      <section class="home-intro">
+        <div class="slider">
+          <div class="slides">
+            <input type="radio" name="radio-btn" id="radio1" />
+            <input type="radio" name="radio-btn" id="radio2" />
+            <input type="radio" name="radio-btn" id="radio3" />
+            <input type="radio" name="radio-btn" id="radio4" />
+            <div class="slide first">
+              <img src="/images/banner1.png" alt="Banner 1" />
+            </div>
+            <div class="slide">
+              <img src="/images/banner2.png" alt="Banner 2" />
+            </div>
+            <div class="slide">
+              <img src="/images/banner3.png" alt="Banner 3" />
+            </div>
+            <div class="slide">
+              <img src="/images/banner4.png" alt="Banner 4" />
+            </div>
+          </div>
+          <div class="navigation-manual">
+            <label for="radio1" class="manual-btn"></label>
+            <label for="radio2" class="manual-btn"></label>
+            <label for="radio3" class="manual-btn"></label>
+            <label for="radio4" class="manual-btn"></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Promotion Section -->
+      <section id="blog">
+        <div class="blog-heading">
+          <span>Our promotion</span>
+          <h3>Recent promotion</h3>
+        </div>
+        <div class="blog-container">
+          <div class="blog-box" th:each="promo : ${promotions}">
+            <div class="blog-img">
+              <img th:src="@{/images/{img}(img=${promo.image})}" th:alt="${promo.alt}" />
+            </div>
+            <div class="blog-text">
+              <span th:text="${promo.date}"></span>
+              <a th:href="@{/promotion/{id}(id=${promo.id})}" th:text="${promo.title}"></a>
+              <p th:text="${promo.description}"></p>
+              <a th:href="@{/promotion/{id}(id=${promo.id})}">Read more</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About (Team) -->
+      <section id="blog">
+        <!-- Heading -->
+        <div class="blog-heading">
+            <span>Our team</span>
+            <h3>Meet our team</h3>
+        </div>
+
+        <!-- Blog container -->
+        <div class="blog-container">
+            <!-- Dynamically generate team member cards -->
+            <div class="blog-box" th:each="member : ${teamMembers}">
+                <!-- Image -->
+                <div class="blog-img">
+                    <img th:src="@{${member.image}}" th:alt="${member.name}">
+                </div>
+
+                <!-- Text -->
+                <div class="blog-text">
+                    <h1 th:text="${member.name}"></h1>
+                    <p th:text="${member.position}"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <script>
+      function myFunction() {
+        const x = document.getElementById("password01");
+        x.type = x.type === "password" ? "text" : "password";
+      }
+    </script>
+    
+  </body>
+</html>

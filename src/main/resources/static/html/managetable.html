@@ -1,0 +1,104 @@
+<?php
+//session_start();
+$conn= new mysqli("localhost","root","","gogocafe");
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>GOGO CAFE</title>
+    <link rel="icon" type="image/png" href="images/icon.png"/>
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:300,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="acc.css" /> 
+  </head>
+
+  <body>
+    
+    <header>
+      <div>
+        <img src="images/logo.png" class="logo">
+        <ul class="nav">
+          <div class="nav__list">
+            <a href="managemenu.php" class="nav__link">MENU</a>
+            <a href="manageacc.php" class="nav__link">ACCOUNT</a>
+            <a href="managetable.php" class="nav__link active">TABLE</a>
+          </div>
+			
+        </ul>
+		  
+        
+    
+              <!--
+              Too bad the menu has to be inside of the button
+              but hey, it's pure CSS magic.
+              -->
+            
+          </div>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <div class="row">
+        <!--<div class="col-directory">
+          <li>
+            <h4>mama</h4>
+          </li>
+        </div>-->
+        
+        <div class="col-menu">
+          <br>
+          <h2>MANAGE&nbsp; TABLE</h2>
+          <div class="container" >
+            <table>
+                <tr>
+                  <th>Order Number</th>
+				  <th>User ID</th>
+				  <th>Venue</th>
+				  <th>Date</th>
+				  <th>Time</th>
+				  <th>Table Number</th>
+				  <th>Total Amount (RM)</th>
+				  <th>Edit</th>
+                </tr>
+                <tr>
+                  <td>000001</td>
+                  <td>A00001</td>
+                  <td>Bangsar</td>
+		  		  <td>12 June 2023</td>
+		  		  <td>8.00 P.M.</td>
+		  		  <td>1</td>
+		  		  <td>8.00</td>
+				  <td>
+					<a class = "tablenav" href="#">Edit</a>
+                    <a class = "tablenav" href="#">Delete</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>000002</td>
+                  <td>A00002</td>
+                  <td>Bangsar</td>
+		  		  <td>12 June 2023</td>
+		  		  <td>12.00 P.M.</td>
+		  		  <td>5&nbsp;</td>
+		  		  <td>16.00</td>
+				  <td>
+					<a class = "tablenav" href="#">Edit</a>
+                    <a class = "tablenav" href="#">Delete</a>
+                  </td>
+                </tr>
+                <!-- Add more rows for additional user accounts -->
+              </table>
+          </div>
+            
+              <!-- Add form elements for adding new user accounts or searching for existing accounts -->
+            
+            </main>
+            </body>
+            </html>
+            

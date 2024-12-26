@@ -1,0 +1,324 @@
+[{
+  "_id": {
+    "$oid": "676b3a7d12789bf6afdcbae0"
+  },
+  "menuId": "1",
+  "itemName": "Espresso",
+  "itemIngredients": "Espresso shot",
+  "price": 7,
+  "availability": true,
+  "image": "/html/images/1_1.png",
+  "category": "coffee"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbae1"
+  },
+  "menuId": "2",
+  "itemName": "Americano",
+  "itemIngredients": "Espresso and hot water",
+  "price": 8,
+  "availability": true,
+  "image": "/html/images/1_2.png",
+  "category": "coffee"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbae2"
+  },
+  "menuId": "3",
+  "itemName": "Latte",
+  "itemIngredients": "Espresso and steamed milk",
+  "price": 10,
+  "availability": true,
+  "image": "/html/images/1_3.png",
+  "category": "coffee"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbae3"
+  },
+  "menuId": "4",
+  "itemName": "Cappuccino",
+  "itemIngredients": "Espresso, steamed milk, and foam",
+  "price": 8,
+  "availability": true,
+  "image": "/html/images/1_4.png",
+  "category": "coffee"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbae4"
+  },
+  "menuId": "5",
+  "itemName": "Mocha Latte",
+  "itemIngredients": "Espresso, chocolate syrup, and steamed milk",
+  "price": 10.9,
+  "availability": true,
+  "image": " /html/images/1_5.png",
+  "category": "coffee"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbae5"
+  },
+  "menuId": "6",
+  "itemName": "Vanilla Latte",
+  "itemIngredients": "Espresso, vanilla syrup, and steamed milk",
+  "price": 10.9,
+  "availability": true,
+  "image": "/html/images/1_6.png",
+  "category": "coffee"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbae6"
+  },
+  "menuId": "7",
+  "itemName": "Hazelnut Latte",
+  "itemIngredients": "Espresso, hazelnut syrup, and steamed milk",
+  "price": 10.9,
+  "availability": true,
+  "image": "/html/images/1_7.png",
+  "category": "coffee"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbae7"
+  },
+  "menuId": "8",
+  "itemName": "Caramel Macchiato",
+  "itemIngredients": "Espresso, caramel syrup, and steamed milk",
+  "price": 10.9,
+  "availability": true,
+  "image": "/html/images/1_8.png",
+  "category": "coffee"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbae8"
+  },
+  "menuId": "9",
+  "itemName": "Salted Caramel Latte",
+  "itemIngredients": "Espresso, salted caramel syrup, and steamed milk",
+  "price": 11.9,
+  "availability": true,
+  "image": "/html/images/1_9.png",
+  "category": "coffee"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbae9"
+  },
+  "menuId": "10",
+  "itemName": "Chocolate Latte",
+  "itemIngredients": "Chocolate syrup and steamed milk",
+  "price": 9.9,
+  "availability": true,
+  "image": "/html/images/2_1.png",
+  "category": "non coffee"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbaea"
+  },
+  "menuId": "11",
+  "itemName": "Salted Caramel Chocolate",
+  "itemIngredients": "Salted caramel syrup and chocolate",
+  "price": 11.9,
+  "availability": true,
+  "image": "/html/images/2_2.png",
+  "category": "non coffee"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbaeb"
+  },
+  "menuId": "12",
+  "itemName": "French Vanilla Chocolate",
+  "itemIngredients": "French vanilla syrup and chocolate",
+  "price": 11.9,
+  "availability": true,
+  "image": "/html/images/2_3.png",
+  "category": "non coffee"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbaec"
+  },
+  "menuId": "13",
+  "itemName": "Pink Lemonade",
+  "itemIngredients": "Pink lemonade concentrate",
+  "price": 11.9,
+  "availability": true,
+  "image": "/html/images/3_1.png",
+  "category": "refresher"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbaed"
+  },
+  "menuId": "14",
+  "itemName": "Orange Lemonade",
+  "itemIngredients": "Orange juice and lemonade",
+  "price": 11.9,
+  "availability": true,
+  "image": "/html/images/3_2.png",
+  "category": "refresher"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbaee"
+  },
+  "menuId": "15",
+  "itemName": "Lychee Strawberry Cooler",
+  "itemIngredients": "Lychee and strawberry puree",
+  "price": 11.9,
+  "availability": true,
+  "image": "/html/images/3_3.png",
+  "category": "refresher"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbaef"
+  },
+  "menuId": "16",
+  "itemName": "Espresso Frappe",
+  "itemIngredients": "Espresso blended with ice",
+  "price": 11.9,
+  "availability": true,
+  "image": "/html/images/4_1.png",
+  "category": "frappe"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbaf0"
+  },
+  "menuId": "17",
+  "itemName": "Java Chip Frappe",
+  "itemIngredients": "Chocolate chips and coffee blended with ice",
+  "price": 13.9,
+  "availability": true,
+  "image": "/html/images/4_2.png",
+  "category": "frappe"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbaf1"
+  },
+  "menuId": "18",
+  "itemName": "Vanilla Frappe",
+  "itemIngredients": "Vanilla syrup and milk blended with ice",
+  "price": 13.9,
+  "availability": true,
+  "image": "/html/images/4_3.png",
+  "category": "frappe"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbaf2"
+  },
+  "menuId": "19",
+  "itemName": "Matcha Frappe",
+  "itemIngredients": "Matcha green tea powder blended with ice",
+  "price": 13.9,
+  "availability": true,
+  "image": "/html/images/4_4.png",
+  "category": "frappe"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbaf3"
+  },
+  "menuId": "20",
+  "itemName": "Biscoff Caramel Frappe",
+  "itemIngredients": "Biscoff cookies and caramel blended with ice",
+  "price": 15.9,
+  "availability": true,
+  "image": "/html/images/4_5.png",
+  "category": "frappe"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbaf4"
+  },
+  "menuId": "21",
+  "itemName": "Mango Frappe",
+  "itemIngredients": "Mango puree blended with ice",
+  "price": 13.9,
+  "availability": true,
+  "image": "/html/images/4_6.png",
+  "category": "frappe"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbaf5"
+  },
+  "menuId": "22",
+  "itemName": "Sausage Roll",
+  "itemIngredients": "Sausage wrapped in puff pastry",
+  "price": 6.9,
+  "availability": true,
+  "image": "/html/images/5_1.png",
+  "category": "pastry"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbaf6"
+  },
+  "menuId": "23",
+  "itemName": "Chocolate Danish Roll",
+  "itemIngredients": "Danish pastry filled with chocolate",
+  "price": 7.9,
+  "availability": true,
+  "image": "/html/images/5_2.png",
+  "category": "pastry"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbaf7"
+  },
+  "menuId": "24",
+  "itemName": "Chicken & Cheese Croissant",
+  "itemIngredients": "Croissant filled with chicken and cheese",
+  "price": 9.9,
+  "availability": true,
+  "image": "/html/images/5_3.png",
+  "category": "pastry"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbaf8"
+  },
+  "menuId": "25",
+  "itemName": "Mushroom Chicken Deluxe",
+  "itemIngredients": "Chicken and mushroom filling in pastry",
+  "price": 7.9,
+  "availability": true,
+  "image": "/html/images/5_4.png",
+  "category": "pastry"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbaf9"
+  },
+  "menuId": "26",
+  "itemName": "Sprouted Rye Bread",
+  "itemIngredients": "Bread made from sprouted rye grains",
+  "price": 6.9,
+  "availability": true,
+  "image": "/html/images/5_5.png",
+  "category": "pastry"
+},
+{
+  "_id": {
+    "$oid": "676b3cd212789bf6afdcbafa"
+  },
+  "menuId": "27",
+  "itemName": "Vanilla Chocolate Twist",
+  "itemIngredients": "Twisted pastry with vanilla and chocolate",
+  "price": 6.9,
+  "availability": true,
+  "image": "/html/images/5_6.png",
+  "category": "pastry"
+}]

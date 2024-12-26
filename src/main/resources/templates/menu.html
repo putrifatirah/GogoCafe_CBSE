@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOGO Cafe</title>
+    <link rel="stylesheet" href="/styles/menu.css">
+    <link rel="stylesheet" href="/styles/topnavigation.css">
+    <link rel="stylesheet" href="/styles/style1.css">
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+<header>
+    <a>
+        <img src="/images/logo2.png" class="logo" />
+        <ul class="nav">
+          <div class="nav__list">
+            <a href="/" class="nav__link active">HOME</a>
+            <a href="/menu" class="nav__link">MENU</a>
+            <a href="/ordernow" class="nav__link">ORDER NOW</a>
+
+            <!-- Login/Profile/Logout Links -->
+            <a th:if="${session.loggedInUser == null}" onclick="document.getElementById('id01').style.display='block'" href="#" class="nav__link">LOGIN</a>
+
+            <!-- Dropdown for logged-in users -->
+            <div th:if="${session.loggedInUser != null}" class="dropdown">
+              <a href="#" class="nav__link">MY ACCOUNT</a>
+              <div class="dropdown-content">
+                <a href="/profile">View Profile</a>
+                <a href="/logout">Logout</a>
+              </div>
+            </div>
+          </div>
+        </ul>
+      </a>
+</header>
+
+<main>
+    <!-- SHOP SECTION -->
+    <div class="row">
+        <div class="col-menu">
+            <!-- Coffee Drinks Section -->
+            <h2>COFFEE DRINKS</h2>
+            <div class="container">
+                <div class="row">
+                    <div class="card" style="width: 25%; display: inline-block; margin: 1%;"
+                         th:each="menuItem : ${menuItems}" 
+                         th:if="${menuItem.category == 'coffee'}">
+                        <div class="imgBx">
+                            <img th:src="@{/images/{image}(image=${menuItem.image})}" alt="" class="product-img">
+                        </div>
+                        <div class="content">
+                            <h2>Ingredients</h2>
+                            <p class="product-title" th:text="${menuItem.itemIngredients}"></p>
+                            <h2>Price</h2>
+                            <p class="product-title" th:text="${menuItem.price}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Non-Coffee Drinks Section -->
+            <h2>NON-COFFEE DRINKS</h2>
+            <div class="container">
+                <div class="row">
+                    <div class="card" style="width: 30%; display: inline-block; margin: 1%;"
+                         th:each="menuItem : ${menuItems}" 
+                         th:if="${menuItem.category == 'non coffee'}">
+                        <div class="imgBx">
+                            <img th:src="@{/images/{image}(image=${menuItem.image})}" alt="" class="product-img">
+                        </div>
+                        <div class="content">
+                            <h2>Ingredients</h2>
+                            <p class="product-title" th:text="${menuItem.itemIngredients}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Repeat for Other Categories -->
+            <h2>REFRESHERS</h2>
+            <div class="container">
+                <div class="row">
+                    <div class="card" style="width: 30%; display: inline-block; margin: 1%;"
+                         th:each="menuItem : ${menuItems}" 
+                         th:if="${menuItem.category == 'refresher'}">
+                        <div class="imgBx">
+                            <img th:src="@{/images/{image}(image=${menuItem.image})}" alt="" class="product-img">
+                        </div>
+                        <div class="content">
+                            <h2>Ingredients</h2>
+                            <p class="product-title" th:text="${menuItem.itemIngredients}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2>FRAPPES</h2>
+            <div class="container">
+                <div class="row">
+                    <div class="card" style="width: 30%; display: inline-block; margin: 1%;"
+                         th:each="menuItem : ${menuItems}" 
+                         th:if="${menuItem.category == 'frappe'}">
+                        <div class="imgBx">
+                            <img th:src="@{/images/{image}(image=${menuItem.image})}" alt="" class="product-img">
+                        </div>
+                        <div class="content">
+                            <h2>Ingredients</h2>
+                            <p class="product-title" th:text="${menuItem.itemIngredients}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2>PASTRIES</h2>
+            <div class="container">
+                <div class="row">
+                    <div class="card" style="width: 30%; display: inline-block; margin: 1%;"
+                         th:each="menuItem : ${menuItems}" 
+                         th:if="${menuItem.category == 'pastry'}">
+                        <div class="imgBx">
+                            <img th:src="@{/images/{image}(image=${menuItem.image})}" alt="" class="product-img">
+                        </div>
+                        <div class="content">
+                            <h2>Ingredients</h2>
+                            <p class="product-title" th:text="${menuItem.itemIngredients}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
