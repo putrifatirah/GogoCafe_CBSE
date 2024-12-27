@@ -1,6 +1,5 @@
 package com.example.demo.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,6 @@ public class ProfileController {
 
     private final UserService userService;
 
-    @Autowired
     public ProfileController(UserService userService) {
         this.userService = userService;
     }
@@ -26,7 +24,7 @@ public class ProfileController {
     public String editProfileForm(HttpSession session, Model model) {
         User user = (User) session.getAttribute("loggedInUser");
         if (user == null) {
-            return "redirect:/login"; // Redirect to login if user not logged in
+            return "redirect:/home"; // Redirect to login if user not logged in
         }
         model.addAttribute("user", user); // Add user to the model
         return "edit"; // Returns the edit-profile.html template
@@ -36,22 +34,45 @@ public class ProfileController {
     public String saveUpdatedProfile(@ModelAttribute User user, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
         if (loggedInUser == null) {
-            return "redirect:/login"; // Redirect if user is not logged in
+            return "redirect:/home"; // Redirect if user is not logged in
         }
+
+        // Preserve the existing user's ID
+        user.setId(loggedInUser.getId());
+
         // Update user details
         loggedInUser.setUsername(user.getUsername());
         loggedInUser.setEmail(user.getEmail());
         loggedInUser.setPhone(user.getPhone());
-        userService.updateUser(loggedInUser); // Save changes to database
-        session.setAttribute("loggedInUser", loggedInUser); // Update session
+
+        // Update the user in the database
+        userService.updateUser(loggedInUser);
+
+        // Update the session with the modified user
+        session.setAttribute("loggedInUser", loggedInUser);
+
         return "redirect:/profile"; // Redirect to the profile page
+    }
+
+    @PostMapping("/delete")
+    public String deleteAccount(HttpSession session) {
+        // Get the logged-in user from the session
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser != null) {
+            // Delete user from the database
+            userService.deleteUser(loggedInUser.getId());
+            // Invalidate session to log out the user
+            session.invalidate();
+        }
+        // Redirect to the home page
+        return "redirect:/home";
     }
 
     @GetMapping("/profile")
     public String showProfile(Model model, HttpSession session) {
         User user = (User) session.getAttribute("loggedInUser");
         if (user == null) {
-            return "redirect:/login"; // Redirect to login if not authenticated
+            return "redirect:/home"; // Redirect to login if not authenticated
         }
         model.addAttribute("user", user);
         return "profile"; // Refers to profile.html in src/main/resources/templates

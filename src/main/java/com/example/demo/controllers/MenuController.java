@@ -24,9 +24,6 @@ public class MenuController {
     public String getMenuPage(Model model, HttpSession session) {
         // Check if the user is logged in
         User user = (User) session.getAttribute("loggedInUser");
-        if (user == null) {
-            return "redirect:/login"; // Redirect to login if not authenticated
-        }
 
         // Pass logged-in user details to the view
         model.addAttribute("user", user);

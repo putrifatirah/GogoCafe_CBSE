@@ -7,7 +7,8 @@ import com.example.demo.models.User;
 public interface UserRepository extends MongoRepository<User, String> {
     User findByEmail(String email); // Find a user by email
     User findByUsername(String username);
-
+    
+    void deleteById(String id); // Delete a user by id
 }
 
 

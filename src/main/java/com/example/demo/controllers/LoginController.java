@@ -1,6 +1,5 @@
 package com.example.demo.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,6 @@ public class LoginController {
 
     private final UserService userService;
 
-    @Autowired
     public LoginController(UserService userService) {
         this.userService = userService;
     }
@@ -26,7 +24,7 @@ public class LoginController {
     @GetMapping("/login")
     public String showLoginPage(Model model) {
         model.addAttribute("user", new User());
-        return "login"; // Refers to the login.html template
+        return "home"; // Refers to the login.html template
     }
 
     // Handle login form submission
@@ -38,7 +36,7 @@ public class LoginController {
             return "redirect:/home"; // Redirect to home page
         } else {
             model.addAttribute("error", "Invalid email or password.");
-            return "login"; // Stay on the login page
+            return "error"; // Stay on the login page
         }
     }
 

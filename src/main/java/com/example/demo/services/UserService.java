@@ -1,6 +1,6 @@
 package com.example.demo.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.models.User;
@@ -11,7 +11,6 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -25,6 +24,10 @@ public class UserService {
 
     public void updateUser(User user) {
         userRepository.save(user); // Save the updated user in the database
+    }
+
+    public void deleteUser(String userId) {
+        userRepository.deleteById(userId); // Delete user by id
     }
     
     public User findByEmailAndPassword(String email, String password) {

@@ -24,7 +24,6 @@ public class SignupController {
         return "signup"; // This assumes a Thymeleaf template named signup.html exists
     }
   
-    @Autowired
     public SignupController(UserService userService) {
         this.userService = userService;
     }

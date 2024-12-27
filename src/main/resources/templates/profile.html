@@ -45,29 +45,34 @@
 <body>
     <!-- Delete Confirmation Modal -->
     <div id="id02" class="del" style="display: none;">
-        <span
-          style="width: 20px; z-index: 10002;"
-          onclick="document.getElementById('id02').style.display='none'"
-          class="close"
-          title="Close"
-          >×</span
-        >
-        <div class="sub-page-del">
-          <img src="/images/profile/warning.png" style="width: 40px; height: 40px; align-item: center" /><br />
-          <div class="login_heading">Are you sure?</div>
-          <div class="sub-page-del" style="align-items: center;">
-            <p>
+      <span
+      style="width: 20px; z-index: 10002;"
+      onclick="document.getElementById('id02').style.display='none'"
+      class="close"
+      title="Close"
+      >&times;</span
+  >
+  <div class="sub-page-del">
+      <img src="/images/warning.png" style="width: 40px; height: 40px; align-item: center" /><br />
+      <div class="login_heading">Are you sure?</div>
+      <div class="sub-page-del" style="align-items: center;">
+          <p>
               Are you sure you want to delete your account? If you confirm, you
               will be automatically logged out and unable to access your account
               anymore.
-            </p>
-            <br /><a href="#" class="del-button" style="background-color: #f85149;">Yes</a>&nbsp;&nbsp;<a
+          </p>
+          <br />
+          <!-- Delete account form -->
+          <form action="/delete" method="post" style="display: inline;">
+            <button type="submit" class="del-button" style="background-color: #f85149;">Yes</button>
+          </form>
+          &nbsp;&nbsp;
+          <a
               onclick="document.getElementById('id02').style.display='none'"
               class="del-button"
-              >No</a
-            >
-          </div>
-        </div>
+          >No</a>
+      </div>
+  </div>
       </div>
   
     <header>
@@ -160,7 +165,17 @@
     </div>
 </main>
 
-
+<!-- Delete Confirmation Modal -->
+<!-- <div id="deleteModal" class="modal" style="display: none;">
+  <div class="modal-content">
+      <span class="close" onclick="document.getElementById('deleteModal').style.display='none'">&times;</span>
+      <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+      <div style="text-align: center; margin-top: 20px;">
+          <a href="/delete" class="css_wideBtn" style="background-color: #f85149;">Delete</a>
+          <a onclick="document.getElementById('deleteModal').style.display='none'" class="css_wideBtn">Cancel</a>
+      </div>
+  </div>
+</div> -->
 
 <script>
     function confirmDelete() {
