@@ -164,109 +164,85 @@
     </div>
   </div>
 <main>
+  
     <!-- SHOP SECTION -->
     <div class="row">
         <div class="col-menu">
-            <!-- Coffee Drinks Section -->
-            <h2>COFFEE DRINKS</h2>
-            <div class="container">
-                <div class="row">
-                    <div class="card" style="width: 30%; display: inline-block; margin: 1%;"
-                         th:each="menuItem : ${menuItems}" 
-                         th:if="${menuItem.category == 'coffee'}">
-                        <div class="imgBx">
-                            <img th:src="@{/images/{image}(image=${menuItem.image})}" alt="" class="product-img">
-                        </div>
-                        <div class="content">
-                            <h2>Ingredients</h2>
-                            <p class="product-title" th:text="${menuItem.itemIngredients}"></p>
-                            <h2>Price</h2>
-                            <p class="product-title" th:text="${#numbers.formatDecimal(menuItem.price, 1, 2)}"></p>                        </div>
-                    </div>
-                </div>
-            </div>
+          <!-- Search Bar -->
+          <div class="search-container" style="text-align: center; margin: 20px 0;">
+            <form th:action="@{/menu/search}" method="get" style="display: inline-flex; align-items: center; justify-content: center;">
+              <input
+                type="text"
+                name="query"
+                id="searchInput"
+                placeholder="Search menu items..."
+                class="loginField_box"
+                style="padding: 10px; font-size: 16px; border-radius: 4px; border: 1px solid #ccc; width: 60%;"
+                required
+                th:value="${param.query}"
+              />
+              <button 
+                type="submit" 
+                class="loginField_box" 
+                style="padding: 10px 20px; font-size: 16px; margin-left: 10px; border-radius: 4px; border: none; background-color: #3e039b; color: white; cursor: pointer;">
+                Search
+              </button>
+            </form>
+          </div>
 
-            <!-- Non-Coffee Drinks Section -->
-            <h2>NON-COFFEE DRINKS</h2>
-            <div class="container">
+          <!-- Results Section -->
+          <div class="row">
+            <div>
+              <div class="container">
                 <div class="row">
-                    <div class="card" style="width: 30%; display: inline-block; margin: 1%;"
-                         th:each="menuItem : ${menuItems}" 
-                         th:if="${menuItem.category == 'non coffee'}">
-                        <div class="imgBx">
-                            <img th:src="@{/images/{image}(image=${menuItem.image})}" alt="" class="product-img">
-                        </div>
-                        <div class="content">
-                            <h2>Ingredients</h2>
-                            <p class="product-title" th:text="${menuItem.itemIngredients}"></p>
-                            <h2>Price</h2>
-                            <p class="product-title" th:text="${#numbers.formatDecimal(menuItem.price, 1, 2)}"></p>                        </div>
+                  <!-- Display Items -->
+                  <div th:if="${menuItems.size() > 0}" th:each="menuItem : ${menuItems}" style="width: 30%; display: inline-block; margin: 1%;">
+                    <div class="card">
+                      <div class="imgBx">
+                        <img th:src="@{/images/{image}(image=${menuItem.image})}" alt="" class="product-img">
+                      </div>
+                      <div class="content">
+                        <h2 th:text="${menuItem.itemName}"></h2>
+                        <p class="product-title" th:text="${menuItem.itemIngredients}"></p>
+                        <p class="product-title" th:text="'RM' + ${#numbers.formatDecimal(menuItem.price, 1, 2)}"></p>
+                      </div>
                     </div>
-                </div>
-            </div>
+                  </div>
 
-            <!-- Repeat for Other Categories -->
-            <h2>REFRESHERS</h2>
-            <div class="container">
-                <div class="row">
-                    <div class="card" style="width: 30%; display: inline-block; margin: 1%;"
-                         th:each="menuItem : ${menuItems}" 
-                         th:if="${menuItem.category == 'refresher'}">
-                        <div class="imgBx">
-                            <img th:src="@{/images/{image}(image=${menuItem.image})}" alt="" class="product-img">
-                        </div>
-                        <div class="content">
-                            <h2>Ingredients</h2>
-                            <p class="product-title" th:text="${menuItem.itemIngredients}"></p>
-                            <h2>Price</h2>
-                            <p class="product-title" th:text="${#numbers.formatDecimal(menuItem.price, 1, 2)}"></p>                        </div>
-                    </div>
+                  <!-- No Items Found Message -->
+                  <div th:if="${menuItems.size() == 0}" style="text-align: center; width: 100%;">
+                    <h2 style="color: #555;">No items found.</h2>
+                    <a href="/menu" style="display: inline-block; margin-top: 10px; padding: 10px 20px; font-size: 16px; color: white; background-color: #3e039b; text-decoration: none; border-radius: 4px; cursor: pointer;">
+                      Go Back to Full Menu
+                    </a>
+                  </div>
                 </div>
+              </div>
             </div>
-
-            <h2>FRAPPES</h2>
-            <div class="container">
-                <div class="row">
-                    <div class="card" style="width: 30%; display: inline-block; margin: 1%;"
-                         th:each="menuItem : ${menuItems}" 
-                         th:if="${menuItem.category == 'frappe'}">
-                        <div class="imgBx">
-                            <img th:src="@{/images/{image}(image=${menuItem.image})}" alt="" class="product-img">
-                        </div>
-                        <div class="content">
-                            <h2>Ingredients</h2>
-                            <p class="product-title" th:text="${menuItem.itemIngredients}"></p>
-                            <h2>Price</h2>
-                            <p class="product-title" th:text="${#numbers.formatDecimal(menuItem.price, 1, 2)}"></p>                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <h2>PASTRIES</h2>
-            <div class="container">
-                <div class="row">
-                    <div class="card" style="width: 30%; display: inline-block; margin: 1%;"
-                         th:each="menuItem : ${menuItems}" 
-                         th:if="${menuItem.category == 'pastry'}">
-                        <div class="imgBx">
-                            <img th:src="@{/images/{image}(image=${menuItem.image})}" alt="" class="product-img">
-                        </div>
-                        <div class="content">
-                            <h2>Ingredients</h2>
-                            <p class="product-title" th:text="${menuItem.itemIngredients}"></p>
-                            <h2>Price</h2>
-                            <p class="product-title" th:text="${#numbers.formatDecimal(menuItem.price, 1, 2)}"></p>                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    </div>
+      </div>
+
 </main>
 <script>
     function myFunction() {
      const x = document.getElementById("password01");
      x.type = x.type === "password" ? "text" : "password";
    }
+
+   function filterMenuItems() {
+        const searchInput = document.getElementById("searchInput").value.toLowerCase();
+        const menuItems = document.querySelectorAll(".menu-item");
+
+        menuItems.forEach(item => {
+            const itemName = item.getAttribute("data-name");
+            if (itemName.includes(searchInput)) {
+                item.style.display = "inline-block";
+            } else {
+                item.style.display = "none";
+            }
+        });
+    }
  </script>
  </body>
 </html>

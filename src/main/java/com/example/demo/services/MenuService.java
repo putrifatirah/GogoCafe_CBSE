@@ -1,10 +1,12 @@
 package com.example.demo.services;
 
-import com.example.demo.models.MenuItem;
-import com.example.demo.repositories.MenuItemRepository;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.example.demo.models.MenuItem;
+import com.example.demo.repositories.MenuItemRepository;
 
 @Service
 public class MenuService {
@@ -16,5 +18,16 @@ public class MenuService {
 
     public List<MenuItem> getAllMenuItems() {
         return menuItemRepository.findAll(); // Fetch all menu items
+    }
+
+    // Search menu items by itemName, itemIngredients, or category
+    public List<MenuItem> searchMenuItems(String query) {
+        return menuItemRepository.findAll().stream()
+                .filter(menuItem -> 
+                    menuItem.getItemName().toLowerCase().contains(query.toLowerCase()) ||
+                    menuItem.getItemIngredients().toLowerCase().contains(query.toLowerCase()) ||
+                    menuItem.getCategory().toLowerCase().contains(query.toLowerCase())
+                )
+                .collect(Collectors.toList());
     }
 }

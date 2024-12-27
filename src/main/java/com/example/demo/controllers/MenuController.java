@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.models.MenuItem;
 import com.example.demo.models.User;
@@ -35,5 +36,13 @@ public class MenuController {
         model.addAttribute("menuItems", menuItems);
 
         return "menu"; // Corresponds to menu.html
+    }
+
+    @GetMapping("/menu/search")
+    public String searchMenuItems(@RequestParam("query") String query, Model model) {
+        // Filter menu items based on the query
+        List<MenuItem> filteredMenuItems = menuService.searchMenuItems(query);
+        model.addAttribute("menuItems", filteredMenuItems);
+        return "menu"; // Return the same menu page with filtered results
     }
 }
