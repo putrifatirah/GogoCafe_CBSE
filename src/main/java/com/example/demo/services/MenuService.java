@@ -12,15 +12,23 @@ import com.example.demo.repositories.MenuItemRepository;
 public class MenuService {
     private final MenuItemRepository menuItemRepository;
 
-    public MenuService(MenuItemRepository menuRepository) {
-        this.menuItemRepository = menuRepository;
+    public MenuService(MenuItemRepository menuItemRepository) {
+        this.menuItemRepository = menuItemRepository;
     }
 
+    // Fetch all menu items
     public List<MenuItem> getAllMenuItems() {
-        return menuItemRepository.findAll(); // Fetch all menu items
+        return menuItemRepository.findAll();
     }
 
-    // Search menu items by itemName, itemIngredients, or category
+    // Fetch available menu items (availability == true)
+    public List<MenuItem> getAvailableMenuItems() {
+        return menuItemRepository.findAll().stream()
+                .filter(MenuItem::isAvailability) // Assuming `isAvailability` is a boolean getter
+                .collect(Collectors.toList());
+    }
+
+    // Search menu items by name, ingredients, or category
     public List<MenuItem> searchMenuItems(String query) {
         return menuItemRepository.findAll().stream()
                 .filter(menuItem -> 
@@ -29,5 +37,22 @@ public class MenuService {
                     menuItem.getCategory().toLowerCase().contains(query.toLowerCase())
                 )
                 .collect(Collectors.toList());
+    }
+
+    // Search available menu items by name, ingredients, or category
+    public List<MenuItem> searchAvailableMenuItems(String query) {
+        return menuItemRepository.findAll().stream()
+                .filter(menuItem -> menuItem.isAvailability() && 
+                    (menuItem.getItemName().toLowerCase().contains(query.toLowerCase()) ||
+                    menuItem.getItemIngredients().toLowerCase().contains(query.toLowerCase()) ||
+                    menuItem.getCategory().toLowerCase().contains(query.toLowerCase()))
+                )
+                .collect(Collectors.toList());
+    }
+
+    // Find a specific menu item by its ID
+    public MenuItem getMenuItemById(Long id) {
+        return menuItemRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Menu item not found with ID: " + id));
     }
 }

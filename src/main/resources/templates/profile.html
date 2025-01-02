@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>GOGO Cafe</title>
+    <link rel="icon" type="image/png" href="/images/icon.png" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/styles/profile.css">
     <link rel="stylesheet" href="/styles/topnavigation.css">
     <link rel="stylesheet" href="/styles/style1.css">
@@ -82,13 +84,13 @@
           <div class="nav__list">
             <a href="/home" class="nav__link">HOME</a>
             <a href="/menu" class="nav__link">MENU</a>
-            <a href="/ordernow" class="nav__link">ORDER NOW</a>
 
             <!-- Login/Profile/Logout Links -->
             <a th:if="${session.loggedInUser == null}" onclick="document.getElementById('id01').style.display='block'" href="#" class="nav__link">LOGIN</a>
 
             <!-- Dropdown for logged-in users -->
             <div th:if="${session.loggedInUser != null}" class="dropdown">
+                <a href="/myorders" class="nav__link">MY ORDERS</a>
               <a href="#" class="nav__link active">MY ACCOUNT</a>
               <div class="dropdown-content">
                 <a href="/profile">View Profile</a>

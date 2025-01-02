@@ -53,13 +53,13 @@
           <div class="nav__list">
             <a href="/" class="nav__link active">HOME</a>
             <a href="/menu" class="nav__link">MENU</a>
-            <a href="/ordernow" class="nav__link">ORDER NOW</a>
 
             <!-- Login/Profile/Logout Links -->
             <a th:if="${session.loggedInUser == null}" onclick="document.getElementById('id01').style.display='block'" href="#" class="nav__link">LOGIN</a>
 
             <!-- Dropdown for logged-in users -->
             <div th:if="${session.loggedInUser != null}" class="dropdown">
+              <a href="/myorders" class="nav__link">MY ORDERS</a>
               <a href="#" class="nav__link">MY ACCOUNT</a>
               <div class="dropdown-content">
                 <a href="/profile">View Profile</a>

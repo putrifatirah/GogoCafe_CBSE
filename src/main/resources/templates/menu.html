@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>GOGO Cafe</title>
+    <link rel="icon" type="image/png" href="/images/icon.png" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/styles/menu.css">
     <link rel="stylesheet" href="/styles/topnavigation.css">
     <link rel="stylesheet" href="/styles/style1.css">
@@ -13,35 +15,94 @@
 
     <style>
         .dropdown {
-          position: relative;
-          display: inline-block;
+            position: relative;
+            display: inline-block;
         }
-  
+
         .dropdown-content {
-          display: none;
-          position: absolute;
-          right: 0;
-          background-color: #f9f9f9;
-          min-width: 150px;
-          box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-          z-index: 1;
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #f9f9f9;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
         }
-  
+
         .dropdown-content a {
-          color: black;
-          padding: 12px 16px;
-          text-decoration: none;
-          display: block;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
         }
-  
+
         .dropdown-content a:hover {
-          background-color: #f1f1f1;
+            background-color: #f1f1f1;
         }
-  
+
         .dropdown:hover .dropdown-content {
-          display: block;
+            display: block;
         }
-      </style>
+
+         /* Cart styling */
+         .cart {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            width: 300px;
+            max-height: 500px;
+            overflow-y: auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            padding: 10px;
+            transition: transform 0.3s;
+        }
+
+        .cart.hidden {
+            transform: translateX(100%);
+        }
+
+        .cart h3 {
+            margin: 0;
+            text-align: center;
+        }
+
+        .cart .cart-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 10px 0;
+        }
+
+        .cart .cart-item img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .cart .cart-item .content {
+            flex: 1;
+        }
+
+        .cart .cart-item .remove {
+            margin-left: auto;
+            color: red;
+            cursor: pointer;
+        }
+
+        .toggle-cart {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background-color: #3e039b;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 11;
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -51,13 +112,13 @@
           <div class="nav__list">
             <a href="/home" class="nav__link">HOME</a>
             <a href="/menu" class="nav__link active">MENU</a>
-            <a href="/ordernow" class="nav__link">ORDER NOW</a>
 
             <!-- Login/Profile/Logout Links -->
             <a th:if="${session.loggedInUser == null}" onclick="document.getElementById('id01').style.display='block'" href="#" class="nav__link">LOGIN</a>
 
             <!-- Dropdown for logged-in users -->
             <div th:if="${session.loggedInUser != null}" class="dropdown">
+              <a href="/myorders" class="nav__link">MY ORDERS</a>
               <a href="#" class="nav__link">MY ACCOUNT</a>
               <div class="dropdown-content">
                 <a href="/profile">View Profile</a>
@@ -69,152 +130,69 @@
       </a>
 </header>
 
-<!-- Modal -->
-<div id="id01" class="modal" th:classappend="${showModal} ? 'display:block' : 'display:none;'">
-    <span
-      style="width: 20px; z-index: 10002;"
-      onclick="document.getElementById('id01').style.display='none'"
-      class="close"
-      title="Close"
-      >&times;</span
-    >
+<!-- Cart Toggle Button -->
+<button class="toggle-cart">My Cart</button>
 
-    <div class="sub-page-content">
-      <div class="header_login_panel">
-        <form th:action="@{/login}" method="post" id="login_form">
-          <table border="0" cellspacing="0" cellpadding="0" width="100%">
-            <tbody>
-              <tr>
-                <td class="login_heading" align="center">Member Login</td>
-              </tr>
-              <tr>
-                <td style="padding-top:10px;font-weight:500;" align="center">
-                  If you have an account with us, please log in.
-                </td>
-              </tr>
-              <!-- <tr>
-                <td><img src="/images/pixel_trans.gif" alt="" width="100%" height="10" /></td>
-              </tr> -->
-              <tr>
-                <td class="main2">Login:</td>
-              </tr>
-              <tr>
-                <td align="center" style="padding-top:5px;">
-                  <input
-                    type="text"
-                    name="email"
-                    class="loginField_box"
-                    th:value="${email ?: ''}"
-                  />
-                  <p class="error" th:if="${error == 'email_error'}">Email field is empty</p>
-                </td>
-              </tr>
-              <tr>
-                <td class="main2">Password:</td>
-              </tr>
-              <tr>
-                <td align="center" style="padding-bottom:5px;">
-                  <input
-                    type="password"
-                    name="password"
-                    id="password01"
-                    class="passwordField_box"
-                    required
-                  />
-                  <input type="checkbox" onclick="myFunction()"> Show Password
-                  <p class="error" th:if="${error == 'password_error'}">Password field is empty</p>
-                </td>
-              </tr>
-              <tr>
-                <td class="css_btnStyle" align="center" style="padding-top: 5px;">
-                  <input type="submit" id="login_submit" name="submit" class="full_button" value="Login" />
-                </td>
-              </tr>
-              <tr>
-                <td style="padding:5px 0px 10px 0px;" align="center">
-                  <a class="smalltext_link" href="/forgot-password">Forgot Your Password?</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+<!-- Cart (Visible only when user is logged in) -->
+<div class="cart" th:if="${session.loggedInUser != null}">
+  <h3>Your Cart</h3>
+  <div id="cart-content"></div>
+  <p><strong>Total:</strong> RM <span id="cart-total">0.00</span></p>
+  <button onclick="checkout()" class="loginField_box" style="width: 100%; background-color: #3e039b; color: white; border: none; padding: 10px;">Checkout</button>
+</div>
+
+<main>
+  <!-- SHOP SECTION -->
+  <div class="row">
+    <div class="col-menu">
+      <!-- Search Bar -->
+      <div class="search-container" style="text-align: center; margin: 20px 0;">
+        <form th:action="@{/menu/search}" method="get" style="display: inline-flex; align-items: center; justify-content: center;">
+          <input
+            type="text"
+            name="query"
+            id="searchInput"
+            placeholder="Search menu items..."
+            class="loginField_box"
+            style="padding: 10px; font-size: 16px; border-radius: 4px; border: 1px solid #ccc; width: 60%;"
+            required
+            th:value="${param.query}"
+          />
+          <button 
+            type="submit" 
+            class="loginField_box" 
+            style="padding: 10px 20px; font-size: 16px; margin-left: 10px; border-radius: 4px; border: none; background-color: #3e039b; color: white; cursor: pointer;">
+            Search
+          </button>
         </form>
       </div>
 
-      <div class="header_new_customer_panel">
-        <table border="0" width="100%" cellspacing="0" cellpadding="0">
-          <tbody>
-            <tr>
-              <td class="login_heading" align="center" style="padding-top:40px;">New Customer</td>
-            </tr>
-            <tr>
-              <td align="center" style="padding-top:10px;font-weight:500;">
-                By creating an account with us, you will be able to move through the checkout process faster, store
-                multiple shipping addresses, view and track your orders in your account and more.
-                
-              </td>
-            </tr>
-            <tr>
-              <td class="css_btnStyle" align="center">
-                <a href="/signup" class="css_btn_full">Sign Up</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-<main>
-  
-    <!-- SHOP SECTION -->
-    <div class="row">
-        <div class="col-menu">
-          <!-- Search Bar -->
-          <div class="search-container" style="text-align: center; margin: 20px 0;">
-            <form th:action="@{/menu/search}" method="get" style="display: inline-flex; align-items: center; justify-content: center;">
-              <input
-                type="text"
-                name="query"
-                id="searchInput"
-                placeholder="Search menu items..."
-                class="loginField_box"
-                style="padding: 10px; font-size: 16px; border-radius: 4px; border: 1px solid #ccc; width: 60%;"
-                required
-                th:value="${param.query}"
-              />
-              <button 
-                type="submit" 
-                class="loginField_box" 
-                style="padding: 10px 20px; font-size: 16px; margin-left: 10px; border-radius: 4px; border: none; background-color: #3e039b; color: white; cursor: pointer;">
-                Search
-              </button>
-            </form>
-          </div>
-
-          <!-- Results Section -->
-          <div class="row">
-            <div>
-              <div class="container">
-                <div class="row">
-                  <!-- Display Items -->
-                  <div th:if="${menuItems.size() > 0}" th:each="menuItem : ${menuItems}" style="width: 30%; display: inline-block; margin: 1%;">
-                    <div class="card">
-                      <div class="imgBx">
-                        <img th:src="@{/images/{image}(image=${menuItem.image})}" alt="" class="product-img">
-                      </div>
-                      <div class="content">
-                        <h2 th:text="${menuItem.itemName}"></h2>
-                        <p class="product-title" th:text="${menuItem.itemIngredients}"></p>
-                        <p class="product-title" th:text="'RM' + ${#numbers.formatDecimal(menuItem.price, 1, 2)}"></p>
-                      </div>
-                    </div>
+      <!-- Results Section -->
+      <div class="row">
+        <div>
+          <div class="container">
+            <div class="row">
+              <!-- Display Items -->
+              <div th:if="${menuItems.size() > 0}" th:each="menuItem : ${menuItems}" style="width: 30%; display: inline-block; margin: 1%;">
+                <div class="card">
+                  <div class="imgBx">
+                    <img th:src="@{/images/{image}(image=${menuItem.image})}" alt="" class="product-img">
                   </div>
-
-                  <!-- No Items Found Message -->
-                  <div th:if="${menuItems.size() == 0}" style="text-align: center; width: 100%;">
-                    <h2 style="color: #555;">No items found.</h2>
-                    <a href="/menu" style="display: inline-block; margin-top: 10px; padding: 10px 20px; font-size: 16px; color: white; background-color: #3e039b; text-decoration: none; border-radius: 4px; cursor: pointer;">
-                      Go Back to Full Menu
-                    </a>
+                  <div class="content">
+                    <h2 th:text="${menuItem.itemName}"></h2>
+                    <p class="product-title" th:text="${menuItem.itemIngredients}"></p>
+                    <p class="product-price" th:text="'RM' + ${#numbers.formatDecimal(menuItem.price, 1, 2)}"></p>
+                    <button 
+                        th:if="${session.loggedInUser != null}" 
+                        class="add-to-cart" 
+                        th:data-id="${menuItem.menuId}" 
+                        th:data-name="${menuItem.itemName}" 
+                        th:data-price="${menuItem.price}" 
+                        th:data-image="${menuItem.image}" 
+                        style="padding: 10px; background-color: #3e039b; color: white; border: none; cursor: pointer;">
+                        Add to Cart
+                    </button>
+                    <button th:if="${session.loggedInUser == null}" disabled style="padding: 10px; background-color: #ccc; color: white; border: none; cursor: not-allowed;">Login to Add</button>
                   </div>
                 </div>
               </div>
@@ -222,27 +200,109 @@
           </div>
         </div>
       </div>
-
+    </div>
+  </div>
 </main>
+
 <script>
-    function myFunction() {
-     const x = document.getElementById("password01");
-     x.type = x.type === "password" ? "text" : "password";
-   }
+let cart = [];
 
-   function filterMenuItems() {
-        const searchInput = document.getElementById("searchInput").value.toLowerCase();
-        const menuItems = document.querySelectorAll(".menu-item");
+// Add functionality to toggle cart visibility
+const toggleCartButton = document.querySelector(".toggle-cart");
+const cartElement = document.querySelector(".cart");
 
-        menuItems.forEach(item => {
-            const itemName = item.getAttribute("data-name");
-            if (itemName.includes(searchInput)) {
-                item.style.display = "inline-block";
-            } else {
-                item.style.display = "none";
-            }
+toggleCartButton.addEventListener("click", () => {
+    cartElement.classList.toggle("hidden");
+});
+
+// Add item to cart
+document.querySelectorAll(".add-to-cart").forEach((button) => {
+    button.addEventListener("click", function () {
+        const id = this.getAttribute("data-id");
+        const itemName = this.getAttribute("data-name");
+        const price = parseFloat(this.getAttribute("data-price"));
+        const image = this.getAttribute("data-image");
+
+        // Check if item is already in the cart
+        const item = cart.find((item) => item.id === id);
+        if (item) {
+            alert("Item already in cart!");
+        } else {
+            cart.push({ id, itemName, price, image, quantity: 1 });
+            renderCart();
+        }
+    });
+});
+
+// Render cart
+function renderCart() {
+    const cartContent = document.getElementById("cart-content");
+    const cartTotal = document.getElementById("cart-total");
+    cartContent.innerHTML = "";
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        const cartItem = document.createElement("div");
+        cartItem.className = "cart-item";
+
+        cartItem.innerHTML = `
+            <img src="/images/${item.image}" alt="${item.itemName}" />
+            <div class="content">
+                <p>${item.itemName}</p>
+                <p>RM ${item.price.toFixed(2)}</p>
+                <div>
+                    <button class="quantity-btn" data-index="${index}" data-action="decrease">-</button>
+                    <span>${item.quantity}</span>
+                    <button class="quantity-btn" data-index="${index}" data-action="increase">+</button>
+                </div>
+            </div>
+            <span class="remove" data-index="${index}">Remove</span>
+        `;
+        cartContent.appendChild(cartItem);
+        total += item.price * item.quantity;
+    });
+
+    cartTotal.textContent = total.toFixed(2);
+
+    // Add event listeners for quantity buttons
+    document.querySelectorAll(".quantity-btn").forEach((button) => {
+        button.addEventListener("click", function () {
+            const index = parseInt(this.getAttribute("data-index"));
+            const action = this.getAttribute("data-action");
+            updateQuantity(index, action);
         });
+    });
+
+    // Add remove functionality
+    document.querySelectorAll(".remove").forEach((button) => {
+        button.addEventListener("click", function () {
+            const index = this.getAttribute("data-index");
+            cart.splice(index, 1);
+            renderCart();
+        });
+    });
+}
+
+// Update quantity
+function updateQuantity(index, action) {
+    if (action === "increase") {
+        cart[index].quantity += 1;
+    } else if (action === "decrease" && cart[index].quantity > 1) {
+        cart[index].quantity -= 1;
     }
- </script>
- </body>
+    renderCart();
+}
+
+// Checkout function
+function checkout() {
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+    alert("Checkout successful!");
+    cart = [];
+    renderCart();
+}
+</script>
+</body>
 </html>
