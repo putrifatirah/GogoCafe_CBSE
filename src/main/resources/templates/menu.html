@@ -299,10 +299,34 @@ function checkout() {
         alert("Your cart is empty!");
         return;
     }
-    alert("Checkout successful!");
-    cart = [];
-    renderCart();
-}
+
+    const order = {
+        cartItems: cart,
+        totalPrice: cart.reduce((total, item) => total + item.price * item.quantity, 0),
+    };
+
+    // Send the order data to the server
+    fetch('/order/checkout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(order),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Redirect to the receipt page with the order ID
+            window.location.href = `/order/receipt?orderId=${data.orderId}`;
+        } else {
+            alert('Failed to create the order. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+    });
+    }
 </script>
 </body>
 </html>

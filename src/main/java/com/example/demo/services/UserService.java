@@ -37,5 +37,9 @@ public class UserService {
         }
         return null; // Return null if authentication fails
     }
+    
+    public User getUserById(String userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
 
 }
