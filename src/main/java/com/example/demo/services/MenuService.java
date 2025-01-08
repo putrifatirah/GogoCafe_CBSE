@@ -51,8 +51,8 @@ public class MenuService {
     }
 
     // Find a specific menu item by its ID
-    public MenuItem getMenuItemById(Long id) {
-        return menuItemRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Menu item not found with ID: " + id));
+    public MenuItem getMenuItemById(String menuId) {
+        return menuItemRepository.findById(menuId)
+                .orElseThrow(() -> new IllegalArgumentException("Menu item not found with ID: " + menuId));
     }
 }

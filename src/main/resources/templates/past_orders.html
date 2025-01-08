@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>GOGO Cafe</title>
+    <link rel="icon" type="image/png" href="/images/icon.png" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles/menu.css">
+    <link rel="stylesheet" href="/styles/topnavigation.css">
+    <link rel="stylesheet" href="/styles/style1.css">
+    <link rel="stylesheet" href="/styles/style.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            margin: 0 10px;
+            text-align: center;
+            border-radius: 5px;
+            background-color: #ddd;
+            cursor: pointer;
+        }
+        .tab.active {
+            background-color: #3e039b;
+            color: #fff;
+        }
+        .order-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+        .order-card h3 {
+            margin: 0 0 10px;
+        }
+        .order-card p {
+            margin: 5px 0;
+        }
+        .reorder-button {
+            background-color: #3e039b;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a>
+            <img src="/images/logo2.png" class="logo" />
+            <ul class="nav">
+            <div class="nav__list">
+                <a href="/home" class="nav__link">HOME</a>
+                <a href="/menu" class="nav__link">MENU</a>
+
+                <!-- Login/Profile/Logout Links -->
+                <a th:if="${session.loggedInUser == null}" onclick="document.getElementById('id01').style.display='block'" href="#" class="nav__link">LOGIN</a>
+
+                <!-- Dropdown for logged-in users -->
+                <div th:if="${session.loggedInUser != null}" class="dropdown">
+                <a href="/orders" class="nav__link active">MY ORDERS</a>
+                <a href="#" class="nav__link">MY ACCOUNT</a>
+                <div class="dropdown-content">
+                    <a href="/profile">View Profile</a>
+                    <a href="/logout">Logout</a>
+                </div>
+                </div>
+            </div>
+            </ul>
+        </a>
+    </header>
+
+    <div class="tabs">
+        <a href="/orders" class="tab">All Orders</a>
+        <a href="/orders/active" class="tab">Active Orders</a>
+        <a href="/orders/past" class="tab active">Past Orders</a>
+    </div>
+    
+    <div th:if="${orders.isEmpty()}">
+        <p>No past orders to display.</p>
+    </div>
+    
+    <div th:each="order : ${orders}">
+        <div class="order-card">
+            <h3>Order ID: <span th:text="${order.orderId}"></span></h3>
+            <p>Status: <span th:text="${order.status}"></span></p>
+            <p>Total Price: RM<span th:text="${order.totalPrice}"></span></p>
+            <p>Timestamp: <span th:text="${#dates.format(order.timeStamp, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+            <a th:href="'/order/receipt?orderId=' + ${order.orderId}" class="reorder-button">View Details</a>
+        </div>
+    </div>
+    
+    
+</body>
+</html>

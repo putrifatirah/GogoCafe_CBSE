@@ -139,7 +139,7 @@
 
             <!-- Dropdown for logged-in users -->
             <div th:if="${session.loggedInUser != null}" class="dropdown">
-              <a href="/myorders" class="nav__link">MY ORDERS</a>
+              <a href="/orders" class="nav__link">MY ORDERS</a>
               <a href="#" class="nav__link">MY ACCOUNT</a>
               <div class="dropdown-content">
                 <a href="/profile">View Profile</a>
@@ -155,7 +155,7 @@
     <h1>Order Receipt</h1>
     <div class="order-summary">
         <p>Order ID: <span th:text="${order.orderId}"></span></p>
-        <p>Order Time: <span th:text="${order.timeStamp}"></span></p>
+        <p>Order Time: <span th:text="${#dates.format(order.timeStamp, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
         <p>Contact Number: <span th:text="${order.contactNumber}"></span></p>
     </div>
 

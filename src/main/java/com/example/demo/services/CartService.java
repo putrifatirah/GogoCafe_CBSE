@@ -21,7 +21,7 @@ public class CartService {
     }
 
     // Add a menu item to the user's cart
-    public void addToCart(Long menuItemId, String userId) {
+    public void addToCart(String menuItemId, String userId) {
         // Fetch the menu item
         MenuItem menuItem = menuItemRepository.findById(menuItemId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid menu item ID"));

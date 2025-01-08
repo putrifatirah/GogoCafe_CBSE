@@ -20,8 +20,14 @@ import com.example.demo.services.OrderService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/order")
+@RequestMapping("/orders")
 public class OrderController {
+
+    @GetMapping("/orders")
+    public String getOrders() {
+        // Add logic to fetch orders
+        return "orders"; // Ensure there is an orders.html template
+    }
 
     private final OrderService orderService;
 
@@ -78,5 +84,45 @@ public class OrderController {
         }
 
         return "redirect:/home"; // Redirect after successful submission
+    }
+
+    
+    @GetMapping
+    public String listOrders(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login"; // Redirect to login if not logged in
+        }
+
+        List<Order> orders = orderService.getOrdersByUserId(loggedInUser.getId());
+        model.addAttribute("orders", orders);
+        model.addAttribute("status", "All");
+        return "orders"; // Matches `orders.html` in the templates folder
+    }
+
+    @GetMapping("/active")
+    public String activeOrders(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
+        List<Order> orders = orderService.getOrdersByUserIdAndStatus(loggedInUser.getId(), "Active");
+        model.addAttribute("orders", orders);
+        model.addAttribute("status", "Active");
+        return "orders"; // Reuses the same `orders.html` template
+    }
+
+    @GetMapping("/past")
+    public String pastOrders(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        if (loggedInUser == null) {
+            return "redirect:/login";
+        }
+
+        List<Order> orders = orderService.getOrdersByUserIdAndStatus(loggedInUser.getId(), "Delivered");
+        model.addAttribute("orders", orders);
+        model.addAttribute("status", "Past");
+        return "orders";
     }
 }

@@ -19,6 +19,14 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
+    public List<Order> getOrdersByUserId(String userId) {
+        return orderRepository.findByUserId(userId);
+    }
+
+    public List<Order> getOrdersByUserIdAndStatus(String userId, String status) {
+        return orderRepository.findByUserIdAndStatus(userId, status);
+    }
+
     // Create order with Pending status
     public String createOrder(User user, List<Map<String, Object>> cartItems, double totalPrice) {
         Order order = new Order();

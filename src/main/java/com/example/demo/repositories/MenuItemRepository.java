@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.example.demo.models.MenuItem;
 
-public interface MenuItemRepository extends MongoRepository<MenuItem, Long> {
+public interface MenuItemRepository extends MongoRepository<MenuItem, String> {
     // Find menu item by name
     MenuItem findByItemName(String itemName);
 
