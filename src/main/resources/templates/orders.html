@@ -62,6 +62,10 @@
             border-radius: 5px;
             background-color: #ddd;
             cursor: pointer;
+            text-decoration: none;
+        }
+        .button-container {
+            text-align: center; /* Center-align the button */
         }
         .tab.active {
             background-color: #3e039b;
@@ -88,6 +92,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -119,9 +124,9 @@
     <div class="row">
         <div class="col-menu">
             <div class="tabs">
-                <a href="/orders" class="tab active">All Orders</a>
-                <a href="/orders/active" class="tab">Active Orders</a>
-                <a href="/orders/past" class="tab">Past Orders</a>
+                <a href="/orders" class="tab active">All</a>
+                <a href="/orders/active" class="tab">Active</a>
+                <a href="/orders/past" class="tab">Past</a>
             </div>
 
             <div class="row">
@@ -132,11 +137,16 @@
 
                     <div th:each="order : ${orders}">
                         <div class="order-card">
-                            <h3>Order ID: <span th:text="${order.orderId}"></span></h3>
-                            <p>Status: <span th:text="${order.status}"></span></p>
-                            <p>Total Price: RM<span th:text="${order.totalPrice}"></span></p>
+                            <h3>Status: <span th:text="${order.status}"></span></h3>
+                            <br>
+                            <p>Order ID: <span th:text="${order.orderId}"></span></p>
+                            <p>Total Price: RM<span th:text="${#numbers.formatDecimal(order.totalPrice, 1, 2)}"></span></p>
                             <p>Timestamp: <span th:text="${#dates.format(order.timeStamp, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
-                            <a th:href="'/order/receipt?orderId=' + ${order.orderId}" class="reorder-button">View Details</a>
+                            <br>
+                            <div class="button-container">
+                                <a th:href="'/orders/checkOrder?orderId=' + ${order.orderId}" class="reorder-button">View Details</a>
+                            </div>       
+                            <br>                 
                         </div>
                     </div>
                 </div>

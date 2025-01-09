@@ -120,7 +120,7 @@
         }
 
         .confirm-btn:hover {
-            background-color: #2d0277;
+            background-color: #8150cf;
         }
        
     </style>
@@ -132,14 +132,14 @@
         <ul class="nav">
           <div class="nav__list">
             <a href="/home" class="nav__link">HOME</a>
-            <a href="/menu" class="nav__link active">MENU</a>
+            <a href="/menu" class="nav__link">MENU</a>
 
             <!-- Login/Profile/Logout Links -->
             <a th:if="${session.loggedInUser == null}" onclick="document.getElementById('id01').style.display='block'" href="#" class="nav__link">LOGIN</a>
 
             <!-- Dropdown for logged-in users -->
             <div th:if="${session.loggedInUser != null}" class="dropdown">
-              <a href="/orders" class="nav__link">MY ORDERS</a>
+              <a href="/orders" class="nav__link active">MY ORDERS</a>
               <a href="#" class="nav__link">MY ACCOUNT</a>
               <div class="dropdown-content">
                 <a href="/profile">View Profile</a>
@@ -152,7 +152,7 @@
 </header>
 
 <main>
-    <h1>Order Receipt</h1>
+    <h1>Order Details</h1>
     <div class="order-summary">
         <p>Order ID: <span th:text="${order.orderId}"></span></p>
         <p>Order Time: <span th:text="${#dates.format(order.timeStamp, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
@@ -160,7 +160,6 @@
     </div>
 
     <h2>Order Details</h2>
-    <br>
     <table>
         <thead>
             <tr>
@@ -183,11 +182,21 @@
             </tr>
         </tbody>
     </table>
-
-    <form action="/orders/confirm" method="post">
-        <input type="hidden" name="orderId" th:value="${order.orderId}">
-        <button type="submit" class="confirm-btn">Send Order</button>
-    </form>
+    <!-- Show the Cancel Order button if the order status is Pending -->
+    <div th:if="${order.status == 'Pending'}">
+        <form id="cancelOrderForm" action="/orders/cancel" method="post">
+            <input type="hidden" name="orderId" th:value="${order.orderId}">
+            <button type="button" class="confirm-btn" style="background-color: rgb(177, 2, 2);" onclick="confirmCancel()">Cancel Order</button>
+        </form>
+    </div>
+    
+    <script>
+        function confirmCancel() {
+            if (confirm("Are you sure you want to cancel this order?")) {
+                document.getElementById("cancelOrderForm").submit();
+            }
+        }
+    </script>
 </main>
 </body>
 </html>

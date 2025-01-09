@@ -22,7 +22,12 @@ public class OrderService {
     public List<Order> getOrdersByUserId(String userId) {
         return orderRepository.findByUserId(userId);
     }
+    
 
+    public List<Order> getOrdersByUserIdExcludingStatus(String userId, String excludedStatus) {
+        return orderRepository.findByUserIdAndStatusNot(userId, excludedStatus);
+    }    
+    
     public List<Order> getOrdersByUserIdAndStatus(String userId, String status) {
         return orderRepository.findByUserIdAndStatus(userId, status);
     }
@@ -53,6 +58,10 @@ public class OrderService {
         return savedOrder.getOrderId();
     }
 
+    public void deleteOrderById(String orderId) {
+        orderRepository.deleteById(orderId);
+    }
+    
     public Order getOrderById(String orderId) {
         return orderRepository.findById(orderId).orElse(null);
     }

@@ -14,6 +14,35 @@
     <link rel="stylesheet" href="/styles/style.css">
 
     <style>
+        .dropdown {
+        position: relative;
+        display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #f9f9f9;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
         body {
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
@@ -26,12 +55,14 @@
             margin-bottom: 20px;
         }
         .tab {
+            display:flex;
             padding: 10px 20px;
             margin: 0 10px;
             text-align: center;
             border-radius: 5px;
             background-color: #ddd;
             cursor: pointer;
+            text-decoration: none;
         }
         .tab.active {
             background-color: #3e039b;
@@ -50,6 +81,9 @@
         .order-card p {
             margin: 5px 0;
         }
+        .button-container {
+            text-align: center; /* Center-align the button */
+        }
         .reorder-button {
             background-color: #3e039b;
             color: #fff;
@@ -58,6 +92,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -75,7 +110,7 @@
 
                 <!-- Dropdown for logged-in users -->
                 <div th:if="${session.loggedInUser != null}" class="dropdown">
-                <a href="/orders" class="nav__link active">MY ORDERS</a>
+                <a href="/myorders" class="nav__link active">MY ORDERS</a>
                 <a href="#" class="nav__link">MY ACCOUNT</a>
                 <div class="dropdown-content">
                     <a href="/profile">View Profile</a>
@@ -86,26 +121,39 @@
             </ul>
         </a>
     </header>
+    <div class="row">
+        <div class="col-menu">
+            <div class="tabs">
+                <a href="/orders" class="tab">All</a>
+                <a href="/orders/active" class="tab">Active</a>
+                <a href="/orders/past" class="tab active">Past</a>
+            </div>
 
-    <div class="tabs">
-        <a href="/orders" class="tab">All</a>
-        <a href="/orders/active" class="tab active">Active</a>
-        <a href="/orders/past" class="tab">Past</a>
-    </div>
-
-    <div th:if="${orders.isEmpty()}">
-        <p>No active orders at the moment.</p>
-    </div>
-    
-    <div th:each="order : ${orders}">
-        <div class="order-card">
-            <h3>Order ID: <span th:text="${order.orderId}"></span></h3>
-            <p>Status: <span th:text="${order.status}"></span></p>
-            <p>Total Price: RM<span th:text="${order.totalPrice}"></span></p>
-            <p>Timestamp: <span th:text="${#dates.format(order.timeStamp, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
-            <a th:href="'/order/receipt?orderId=' + ${order.orderId}" class="reorder-button">View Details</a>
+            <div class="row">
+                <div class="container">
+                    <!-- Show a message if no orders are available -->
+                    <div th:if="${orders.isEmpty()}">
+                        <p>No orders available.</p>
+                    </div>
+            
+                    <!-- Loop through and display only completed orders -->
+                    <div th:each="order : ${orders}">
+                        <div th:if="${order.status == 'Completed'}" class="order-card">
+                            <h3>Status: <span th:text="${order.status}"></span></h3>
+                            <br>
+                            <p>Order ID: <span th:text="${order.orderId}"></span></p>
+                            <p>Total Price: RM<span th:text="${#numbers.formatDecimal(order.totalPrice, 1, 2)}"></span></p>
+                            <p>Timestamp: <span th:text="${#dates.format(order.timeStamp, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
+                            <br>
+                            <div class="button-container">
+                                <a th:href="'/orders/checkOrder?orderId=' + ${order.orderId}" class="reorder-button">View Details</a>
+                            </div>       
+                            <br> 
+                        </div>
+                    </div>
+                </div>
+            </div>            
         </div>
     </div>
-    
 </body>
 </html>

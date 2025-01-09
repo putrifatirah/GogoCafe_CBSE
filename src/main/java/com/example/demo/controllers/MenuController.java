@@ -91,7 +91,7 @@ public class MenuController {
         }
 
         // Add the item to the user's cart
-        cartService.addToCart(menuId, user.getId());
+        cartService.addToCart(menuId.toString(), user.getId());
         return "Item successfully added to the cart!";
     }
 

@@ -306,7 +306,7 @@ function checkout() {
     };
 
     // Send the order data to the server
-    fetch('/order/checkout', {
+    fetch('/orders/checkout', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -317,7 +317,7 @@ function checkout() {
     .then(data => {
         if (data.success) {
             // Redirect to the receipt page with the order ID
-            window.location.href = `/order/receipt?orderId=${data.orderId}`;
+            window.location.href = `/orders/receipt?orderId=${data.orderId}`;
         } else {
             alert('Failed to create the order. Please try again.');
         }
