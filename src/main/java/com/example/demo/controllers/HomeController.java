@@ -3,15 +3,23 @@ package com.example.demo.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.example.demo.models.Promotion;
+import com.example.demo.services.PromotionService;
+
 @Controller
 public class HomeController {
 
+    @Autowired
+    private PromotionService promotionService;
+
     @GetMapping("/home")
     public String homePage(Model model) {
+        // Fetch team members
         List<TeamMember> teamMembers = new ArrayList<>();
         teamMembers.add(new TeamMember("Fatirah", "Founder", "images/fatirah.png"));
         teamMembers.add(new TeamMember("Syifaa", "Manager", "images/syifaa.png"));
@@ -21,6 +29,10 @@ public class HomeController {
         teamMembers.add(new TeamMember("Visa", "Barista", "images/visa.png"));
 
         model.addAttribute("teamMembers", teamMembers);
+
+        // Fetch promotions
+        List<Promotion> promotions = promotionService.getActivePromotions();
+        model.addAttribute("promotions", promotions);
 
         return "home"; // Name of the HTML file (home.html)
     }

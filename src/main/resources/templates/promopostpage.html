@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>GOGO CAFE</title>
+    <link rel="icon" type="image/png" href="/images/icon.png" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="/styles/home.css" />
+    <link rel="stylesheet" href="/styles/topnavigation.css" />
+    
+    <style>
+
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: #f9f9f9;
+        min-width: 150px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+      }
+
+      .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+      }
+
+      .dropdown-content a:hover {
+        background-color: #f1f1f1;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+
+      .containerb {
+        display: flex;
+        flex-wrap: wrap; /* Ensures responsiveness */
+        gap: 120px; /* Space between image and content */
+        margin-top: 150px;
+      }
+
+      .header-img {
+        width: 100%; /* Makes the image responsive */
+        max-width: 400px; /* Limits the image width */
+        height: auto; /* Maintains aspect ratio */
+        border-radius: 10px; /* Optional: Adds rounded corners */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds shadow */
+      }
+
+      .post-content {
+        flex: 1; /* Allows the content to take remaining space */
+        max-width: 600px; /* Prevents content from becoming too wide */
+      }
+
+      .post-content .header-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .post-content .sub-heading {
+        font-size: 20px;
+        font-weight: bold;
+        margin: 20px 0 10px;
+      }
+
+      .post-content .post-text {
+        font-size: 16px;
+        margin-bottom: 10px;
+        line-height: 1.6;
+      }
+
+      .unlisted {
+        margin-top: 20px;
+        padding-left: 20px;
+        list-style-type: decimal; /* Adds numbering */
+      }
+
+      .unlisted .post-text {
+        margin-bottom: 10px;
+      }
+
+      .back-home {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #691599;
+        color: white;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .back-home:hover {
+        background-color: #4d0f73; /* Slightly darker shade for hover effect */
+      }
+    </style>
+</head>
+<body>
+    <header>
+      <a>
+        <img src="/images/logo2.png" class="logo" />
+        <ul class="nav">
+          <div class="nav__list">
+            <a href="/" class="nav__link active">HOME</a>
+            <a href="/menu" class="nav__link">MENU</a>
+
+            <!-- Login/Profile/Logout Links -->
+            <a th:if="${session.loggedInUser == null}" onclick="document.getElementById('id01').style.display='block'" href="#" class="nav__link">LOGIN</a>
+
+            <!-- Dropdown for logged-in users -->
+            <div th:if="${session.loggedInUser != null}" class="dropdown">
+              <a href="/orders" class="nav__link">MY ORDERS</a>
+              <a href="#" class="nav__link ">MY ACCOUNT</a>
+              <div class="dropdown-content">
+                <a href="/profile">View Profile</a>
+                <a href="/logout">Logout</a>
+              </div>
+            </div>
+          </div>
+        </ul>
+      </a>
+    </header>
+
+    <!-- Container for Image and Content -->
+    <div class="containerb">
+        <!-- Image -->
+        <div>
+            <img th:src="@{/images/{image}(image=${promotion.image})}" alt="Promotion Image" class="header-img" />
+            <br>
+            <!-- Back to Home Button -->
+            <a href="/home" class="back-home">
+              Back to Home
+            </a>
+        </div>
+
+        <!-- Post Content -->
+        <section class="post-content">
+          <h1 class="header-title" th:text="${promotion.title}">Promotion Title</h1>
+          <h2 class="sub-heading" th:text="${promotion.subtitle}">Subtitle</h2>
+          <p class="post-text" th:text="${promotion.description}">
+              Detailed description about the promotion goes here.
+          </p>
+
+          <h2 class="sub-heading">Terms and Conditions</h2>
+          <ul class="unlisted">
+              <li class="post-text" th:each="term : ${promotion.terms}" th:text="${term}">
+                  A specific term goes here.
+              </li>
+          </ul>
+
+          <p class="post-text" th:text="${promotion.additionalInfo}">
+              Additional information about the promotion.
+          </p>
+        </section>
+    </div>
+</body>
+</html>
