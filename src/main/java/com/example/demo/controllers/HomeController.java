@@ -36,6 +36,7 @@ public class HomeController {
 
         return "home"; // Name of the HTML file (home.html)
     }
+    
 
     public static class TeamMember {
         private String name;

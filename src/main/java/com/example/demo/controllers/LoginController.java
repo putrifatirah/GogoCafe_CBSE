@@ -27,16 +27,15 @@ public class LoginController {
         return "home"; // Refers to the login.html template
     }
 
-    // Handle login form submission
     @PostMapping("/login")
     public String loginUser(@ModelAttribute User user, HttpSession session, Model model) {
         User loggedInUser = userService.findByEmailAndPassword(user.getEmail(), user.getPassword());
         if (loggedInUser != null) {
             session.setAttribute("loggedInUser", loggedInUser);
-            return "redirect:/home"; // Redirect to home page
+            return "redirect:/home"; // Redirect to the home page
         } else {
-            model.addAttribute("error", "Invalid email or password.");
-            return "error"; // Stay on the login page
+            model.addAttribute("error", "Invalid email or password. Please try again.");
+            return "home"; // Reload the home page with the login modal still open
         }
     }
 

@@ -22,9 +22,16 @@ public class UserService {
         userRepository.save(user);
     }
 
+    // public void updateUser(User user) {
+    //     userRepository.save(user); // Save the updated user in the database
+    // }
     public void updateUser(User user) {
-        userRepository.save(user); // Save the updated user in the database
+        if (user.getId() == null) {
+            throw new IllegalArgumentException("User ID is required for an update.");
+        }
+        userRepository.save(user);
     }
+    
 
     public void deleteUser(String userId) {
         userRepository.deleteById(userId); // Delete user by id
@@ -35,8 +42,8 @@ public class UserService {
         if (user != null && user.getPassword().equals(password)) {
             return user;
         }
-        return null; // Return null if authentication fails
-    }
+        return null; // Authentication failed
+    }    
     
     public User getUserById(String userId) {
         return userRepository.findById(userId).orElse(null);

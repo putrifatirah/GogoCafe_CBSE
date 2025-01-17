@@ -97,7 +97,11 @@
       .blog-text a:hover {
         text-decoration: underline; /* Underline on hover */
       }
-
+      .error-message {
+        color: red;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
 
     </style>
   </head>
@@ -110,14 +114,16 @@
           <div class="nav__list">
             <a href="/" class="nav__link active">HOME</a>
             <a href="/menu" class="nav__link">MENU</a>
-
+    
             <!-- Login/Profile/Logout Links -->
             <a th:if="${session.loggedInUser == null}" onclick="document.getElementById('id01').style.display='block'" href="#" class="nav__link">LOGIN</a>
-
+    
+            <!-- Separate "Order Now" menu item -->
+            <a th:if="${session.loggedInUser != null}" href="/orders" class="nav__link">MY ORDERS</a>
+    
             <!-- Dropdown for logged-in users -->
             <div th:if="${session.loggedInUser != null}" class="dropdown">
-              <a href="/orders" class="nav__link">MY ORDERS</a>
-              <a href="#" class="nav__link ">MY ACCOUNT</a>
+              <a href="#" class="nav__link">MY ACCOUNT</a>
               <div class="dropdown-content">
                 <a href="/profile">View Profile</a>
                 <a href="/logout">Logout</a>
@@ -129,8 +135,7 @@
     </header>
 
      <!-- Modal -->
-    <div id="id01" class="modal" th:classappend="${showModal} ? 'display:block' : 'display:none;'">
-      <span
+     <div id="id01" class="modal" th:style="${error != null} ? 'display:block;' : 'display:none;'">      <span
         style="width: 20px; z-index: 10002;"
         onclick="document.getElementById('id01').style.display='none'"
         class="close"
@@ -157,6 +162,7 @@
                 <tr>
                   <td class="main2">Login:</td>
                 </tr>
+                
                 <tr>
                   <td align="center" style="padding-top:5px;">
                     <input
@@ -164,13 +170,14 @@
                       name="email"
                       class="loginField_box"
                       th:value="${email ?: ''}"
+                      required
                     />
-                    <p class="error" th:if="${error == 'email_error'}">Email field is empty</p>
                   </td>
                 </tr>
                 <tr>
                   <td class="main2">Password:</td>
                 </tr>
+                <br>
                 <tr>
                   <td align="center" style="padding-bottom:5px;">
                     <input
@@ -180,8 +187,7 @@
                       class="passwordField_box"
                       required
                     />
-                    <input type="checkbox" onclick="myFunction()"> Show Password
-                    <p class="error" th:if="${error == 'password_error'}">Password field is empty</p>
+                    <input type="checkbox" onclick="togglePasswordVisibility('password01')"> Show Password
                   </td>
                 </tr>
                 <tr>
@@ -192,6 +198,14 @@
                 <tr>
                   <td style="padding:5px 0px 10px 0px;" align="center">
                     <a class="smalltext_link" href="/forgot-password">Forgot Your Password?</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <!-- Display error message -->
+                    <div th:if="${error}" class="error-message">
+                      <p th:text="${error}"></p>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -222,7 +236,7 @@
         </div>
       </div>
     </div>
-
+    
     <main>
       <!-- Banner Slider -->
       <section class="home-intro">
@@ -303,7 +317,21 @@
         const x = document.getElementById("password01");
         x.type = x.type === "password" ? "text" : "password";
       }
+
+      function togglePasswordVisibility(inputId) {
+        const inputField = document.getElementById(inputId);
+        inputField.type = inputField.type === "password" ? "text" : "password";
+      }
     </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const hasError = /*[[${error != null}]]*/ false; // Thymeleaf will evaluate this
+        if (hasError) {
+          document.getElementById('id01').style.display = 'block';
+        }
+      });
+    </script>
+    
      <script src="/jsobserver.js"></script>
      <!--Swiper js-->
      <script src="/js/swiper-bundle.min.js"></script>

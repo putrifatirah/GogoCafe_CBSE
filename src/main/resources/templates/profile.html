@@ -77,30 +77,32 @@
   </div>
       </div>
   
-    <header>
+      <header>
         <a>
-        <img src="/images/logo2.png" class="logo" />
-        <ul class="nav">
-          <div class="nav__list">
-            <a href="/home" class="nav__link">HOME</a>
-            <a href="/menu" class="nav__link">MENU</a>
-
-            <!-- Login/Profile/Logout Links -->
-            <a th:if="${session.loggedInUser == null}" onclick="document.getElementById('id01').style.display='block'" href="#" class="nav__link">LOGIN</a>
-
-            <!-- Dropdown for logged-in users -->
-            <div th:if="${session.loggedInUser != null}" class="dropdown">
-                <a href="/orders" class="nav__link">MY ORDERS</a>
-              <a href="#" class="nav__link active">MY ACCOUNT</a>
-              <div class="dropdown-content">
-                <a href="/profile">View Profile</a>
-                <a href="/logout">Logout</a>
+          <img src="/images/logo2.png" class="logo" />
+          <ul class="nav">
+            <div class="nav__list">
+              <a href="/" class="nav__link">HOME</a>
+              <a href="/menu" class="nav__link">MENU</a>
+      
+              <!-- Login/Profile/Logout Links -->
+              <a th:if="${session.loggedInUser == null}" onclick="document.getElementById('id01').style.display='block'" href="#" class="nav__link">LOGIN</a>
+      
+              <!-- Separate "Order Now" menu item -->
+              <a th:if="${session.loggedInUser != null}" href="/orders" class="nav__link">MY ORDERS</a>
+      
+              <!-- Dropdown for logged-in users -->
+              <div th:if="${session.loggedInUser != null}" class="dropdown">
+                <a href="#" class="nav__link active">MY ACCOUNT</a>
+                <div class="dropdown-content">
+                  <a href="/profile">View Profile</a>
+                  <a href="/logout">Logout</a>
+                </div>
               </div>
             </div>
-          </div>
-        </ul>
-      </a>
-</header>
+          </ul>
+        </a>
+      </header>
 
 <main>
     <div class="row" style="display: flex; justify-content: center; align-items: center; min-height: 80vh;">
@@ -144,7 +146,9 @@
                                     </tr>
                                     <tr>
                                         <td style="padding-top: 10px; text-align: center;">
-                                            <a href="#" class="css_wideBtn">Change Password</a>
+                                            <!-- Trigger Change Password Modal -->
+                                            <a href="#" class="css_wideBtn" onclick="document.getElementById('changePasswordModal').style.display='block'">Change Password</a>
+
                                         </td>
                                     </tr>
                                     <tr>
@@ -167,17 +171,29 @@
     </div>
 </main>
 
-<!-- Delete Confirmation Modal -->
-<!-- <div id="deleteModal" class="modal" style="display: none;">
-  <div class="modal-content">
-      <span class="close" onclick="document.getElementById('deleteModal').style.display='none'">&times;</span>
-      <p>Are you sure you want to delete your account? This action cannot be undone.</p>
-      <div style="text-align: center; margin-top: 20px;">
-          <a href="/delete" class="css_wideBtn" style="background-color: #f85149;">Delete</a>
-          <a onclick="document.getElementById('deleteModal').style.display='none'" class="css_wideBtn">Cancel</a>
-      </div>
-  </div>
-</div> -->
+<!-- Change Password Modal -->
+<div id="changePasswordModal" class="modal" style="display: none;">
+    <div style="max-width: 400px; margin: 40px; margin-left: 150px;">
+        <span class="close" onclick="document.getElementById('changePasswordModal').style.display='none'">&times;</span>
+        <h3 style="text-align: center;">Change Password</h3>
+        <form id="changePasswordForm" method="post" onsubmit="return handleChangePassword(event)">
+            <label for="currentPassword">Current Password:</label>
+            <input type="text" id="currentPassword" name="currentPassword" required style="width: 100%; margin-bottom: 10px; padding: 5px;">
+
+            <label for="newPassword">New Password:</label>
+            <input type="text" id="newPassword" name="newPassword" required style="width: 100%; margin-bottom: 10px; padding: 5px;">
+
+            <label style="display: flex; align-items: center; margin-top: 10px;">
+                <input type="checkbox" id="showPasswordCheckbox" style="margin-right: 5px;" onchange="togglePasswordVisibility()"> Show Passwords
+            </label>
+            <br>
+            <button type="submit" style="width: 100%; background-color: #3e039b; color: white; border: none; padding: 10px; cursor: pointer;">
+                Update Password
+            </button>
+        </form>
+        <p id="passwordError" style="color: red; text-align: center; display: none;">Incorrect current password. Please try again.</p>
+    </div>
+</div>
 
 <script>
     function confirmDelete() {
@@ -187,6 +203,31 @@
 
     function closeModal() {
         document.getElementById('deleteModal').style.display = 'none';
+    }
+
+    async function handleChangePassword(event) {
+        event.preventDefault(); // Prevent form submission
+
+        const currentPassword = document.getElementById('currentPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+
+        // Make a POST request to the server
+        const response = await fetch('/change-password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ currentPassword, newPassword }),
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            alert('Password updated successfully.');
+            document.getElementById('changePasswordModal').style.display = 'none';
+        } else {
+            document.getElementById('passwordError').style.display = 'block';
+        }
     }
 </script>
 </body>
