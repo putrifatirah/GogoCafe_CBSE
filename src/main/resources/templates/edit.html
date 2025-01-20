@@ -51,7 +51,7 @@
         <img src="/images/logo2.png" class="logo" />
         <ul class="nav">
           <div class="nav__list">
-            <a href="/" class="nav__link active">HOME</a>
+            <a href="/home" class="nav__link ">HOME</a>
             <a href="/menu" class="nav__link">MENU</a>
     
             <!-- Login/Profile/Logout Links -->
@@ -120,12 +120,7 @@
                           </tr>
                           <tr>
                             <td colspan="2">
-                              <input
-                                type="email"
-                                th:field="*{email}"
-                                class="loginField_box"
-                                required
-                              />
+                              <span th:text="*{email}" class="loginField_box"></span>
                             </td>
                           </tr>
                           <tr>

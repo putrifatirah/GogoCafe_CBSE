@@ -8,6 +8,7 @@ public interface UserRepository extends MongoRepository<User, String> {
     User findByEmail(String email); // Find a user by email
     User findByUsername(String username);
     
+    @Override
     void deleteById(String id); // Delete a user by id
 }
 

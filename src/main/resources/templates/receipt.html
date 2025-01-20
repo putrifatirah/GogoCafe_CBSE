@@ -131,11 +131,11 @@
         <img src="/images/logo2.png" class="logo" />
         <ul class="nav">
         <div class="nav__list">
-            <a href="/" class="nav__link">HOME</a>
+            <a href="/home" class="nav__link">HOME</a>
             <a href="/menu" class="nav__link active">MENU</a>
     
             <!-- Login/Profile/Logout Links -->
-            <a th:if="${session.loggedInUser == null}" onclick="document.getElementById('id01').style.display='block'" href="#" class="nav__link">LOGIN</a>
+            <a th:if="${session.loggedInUser == null}" onclick="document.getElementById('id01').style.display='block'" href="/login" class="nav__link">LOGIN</a>
     
             <!-- Separate "Order Now" menu item -->
             <a th:if="${session.loggedInUser != null}" href="/orders" class="nav__link">MY ORDERS</a>

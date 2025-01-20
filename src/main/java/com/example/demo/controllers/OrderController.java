@@ -65,6 +65,7 @@ public class OrderController {
 
         return "redirect:/orders"; // Redirect back to the orders page
     }
+    
     @GetMapping("/active")
     public String activeOrders(Model model, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");

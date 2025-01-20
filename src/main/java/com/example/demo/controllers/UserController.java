@@ -45,9 +45,7 @@ public class UserController {
         teamMembers.add(new TeamMember("Umi Arifah", "Manager", "images/mipah.png"));
         teamMembers.add(new TeamMember("Rafiuddin", "Barista", "images/rafiy.png"));
         teamMembers.add(new TeamMember("Visa", "Barista", "images/visa.png"));
-
         model.addAttribute("teamMembers", teamMembers);
-
         // Fetch promotions
         List<Promotion> promotions = promotionService.getActivePromotions();
         model.addAttribute("promotions", promotions);
@@ -114,57 +112,46 @@ public class UserController {
         }
         return "redirect:/home"; // Redirect to home page
     }
-
     // **Change Password**
     @PostMapping("/change-password")
     @ResponseBody
     public Map<String, Object> changePassword(@RequestBody Map<String, String> passwords, HttpSession session) {
         Map<String, Object> response = new HashMap<>();
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-
         if (loggedInUser == null) {
             response.put("success", false);
             response.put("message", "User not logged in.");
             return response;
         }
-
         String currentPassword = passwords.get("currentPassword");
         String newPassword = passwords.get("newPassword");
-
         // Verify the current password
         if (!loggedInUser.getPassword().equals(currentPassword)) {
             response.put("success", false);
             response.put("message", "Incorrect current password.");
             return response;
         }
-
         // Update the password
         loggedInUser.setPassword(newPassword);
         userService.updateUser(loggedInUser); // Save the updated user
-
         response.put("success", true);
         return response;
     }
-
     public static class TeamMember {
         private String name;
         private String position;
         private String image;
-
         public TeamMember(String name, String position, String image) {
             this.name = name;
             this.position = position;
             this.image = image;
         }
-
         public String getName() {
             return name;
         }
-
         public String getPosition() {
             return position;
         }
-
         public String getImage() {
             return image;
         }
